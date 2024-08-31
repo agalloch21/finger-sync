@@ -39,6 +39,11 @@ namespace HoloKit.ImageTrackingRelocalization
             }
         }
 
+        public float Progress
+        {
+            get => (float)m_TrackedImagePoses.Count / (float)m_DesiredNumOfSamples;
+        }
+
         [Tooltip("The maximum timestamp gap between two consecutive tracked image poses.")]
         [SerializeField] private double m_MaxTimestampGap = 1.5f;
 
@@ -154,7 +159,8 @@ namespace HoloKit.ImageTrackingRelocalization
             Quaternion meanRotation = Quaternion.identity;
             foreach (var pose in m_TrackedImagePoses)
             {
-                meanRotation = Quaternion.Slerp(meanRotation, pose.Rotation, 1.0f / m_TrackedImagePoses.Count);
+                //meanRotation = Quaternion.Slerp(meanRotation, pose.Rotation, 1.0f / m_TrackedImagePoses.Count);
+                meanRotation *= Quaternion.Slerp(Quaternion.identity, pose.Rotation, 1.0f / m_TrackedImagePoses.Count);
             }
             return meanRotation;
         }

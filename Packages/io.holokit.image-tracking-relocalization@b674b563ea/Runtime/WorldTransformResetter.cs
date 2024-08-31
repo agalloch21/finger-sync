@@ -13,8 +13,8 @@ namespace HoloKit.ImageTrackingRelocalization.Samples.ExternalMarkerRelocalizati
         public void OnTrackedImageStablized(Vector3 position, Quaternion rotation)
         {
             m_RootTransform.position = position;
-            //Quaternion finalRotation = rotation * Quaternion.Euler(90f, 0f, 0f);
-            m_RootTransform.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+            Quaternion finalRotation = rotation * Quaternion.Euler(90f, 0f, 0f);
+            m_RootTransform.rotation = Quaternion.Euler(0f, finalRotation.eulerAngles.y, 0f);
         }
     }
 }
