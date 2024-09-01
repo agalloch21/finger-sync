@@ -5,26 +5,20 @@ using Unity.Netcode;
 using UnityEngine.Events;
 
 
-// https://docs-multiplayer.unity3d.com/netcode/current/basics/networkvariable/
-struct PlayerInfo
-{
-    ulong id;
-    Quaternion rotation;
-    Vector3 translate;
-
-    HandGesture leftGesture;
-    Vector3 leftPosition;
-    HandGesture rightGesture;
-    Vector3 rightPosition;
-}
-
 public class PlayerManager : MonoBehaviour
 {
+    List<Player> playerList;
+
+
     
 
-    public void OnPlayerJoined()
+    void LateUpdate()
     {
-        // Spawn new gameobject
-        
+        var gameobject_list = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < gameobject_list.Length; i++)
+        {
+            //Debug.Log($"Player {i} Pos:{gameobject_list[i].transform.position.ToString()}");
+        }
+       
     }
 }
