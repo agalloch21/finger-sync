@@ -41,7 +41,7 @@ namespace HoloKit.ImageTrackingRelocalization
 
         public float Progress
         {
-            get => (float)m_TrackedImagePoses.Count / (float)m_DesiredNumOfSamples;
+            get => m_TrackedImagePoses == null ? 0 : (float)m_TrackedImagePoses.Count / (float)m_DesiredNumOfSamples;
         }
 
         [Tooltip("The maximum timestamp gap between two consecutive tracked image poses.")]

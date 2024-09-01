@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using Unity.Netcode;
 using TMPro;
 
-public class NetworkUIControl : MonoBehaviour
+public class NetworkPanelController : MonoBehaviour
 {
     [SerializeField] private Button m_StartHostButton;
 
@@ -13,11 +13,23 @@ public class NetworkUIControl : MonoBehaviour
 
     [SerializeField] private TMP_Text m_NetworkStatusText;
 
+    [SerializeField] private Button m_SetServerIPButton;
+
+    [SerializeField] private TMP_Text m_LocalIPText;
+
+    [SerializeField] private TMP_Text m_ServerIPText;
+
+    [SerializeField] private Transform m_ServerIPPanel;
+
+    private NetworkLauncher networkLauncher;
+
     private void Start()
     {
         m_StartHostButton.gameObject.SetActive(true);
         m_StartClientButton.gameObject.SetActive(true);
         m_ShutdownButton.gameObject.SetActive(false);
+
+        networkLauncher = FindFirstObjectByType<NetworkLauncher>();
     }
 
     private void Update()
@@ -51,5 +63,25 @@ public class NetworkUIControl : MonoBehaviour
                 m_ShutdownButton.gameObject.SetActive(true);
             }
         }
+
+        m_LocalIPText.text = networkLauncher.LocalIP;
+        m_ServerIPText.text = networkLauncher.ServerIP;
+    }
+
+    public void OnOpenServerIPPanel()
+    {
+        m_ServerIPPanel.gameObject.SetActive(true);
+    }
+
+    public void OnCloseServerIPPanel()
+    {
+        m_ServerIPPanel.gameObject.SetActive(false);
+    }
+
+    public void OnConfirmServerIP()
+    {
+        if (m_ServerIPText == null || networkLauncher == null) return;
+
+        networkLauncher.SetServerIP(m_ServerIPText.text);
     }
 }

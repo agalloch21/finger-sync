@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Test.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Test/TestParticleSystem/TestParticleSystem.unity
     guid: 62d7e69cada4f4d9e8dcd96eb05211e5
+  - enabled: 1
+    path: Assets/com.holoi.reality.fingersync/fingersync.infrastructure/Assets/infrastructure.unity
+    guid: eab689a3cda31492ea8ad9012237140d
   m_configObjects:
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 3511d94a2e5854166b56fbea31e9517a, type: 2}
     UnityEditor.XR.VisionOS.VisionOSSettings: {fileID: 11400000, guid: cc717b1488b3f40fa93e97cef46b2685, type: 2}

@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 /Build_BurstDebugInformation_DoNotShip/
 .DS_Store
+
+Packages/xiaobo.unity.toolkit/
