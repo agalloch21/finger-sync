@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.XR.Hands;
 
 // https://docs-multiplayer.unity3d.com/netcode/current/basics/networkvariable/
 public struct PlayerHand : INetworkSerializable, System.IEquatable<PlayerHand>
@@ -43,4 +44,17 @@ public class Player : NetworkBehaviour
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
 
+    //void Update()
+    //{
+    //    SetHandTransform(Handedness.Left);
+    //    SetHandTransform(Handedness.Right);
+    //}
+
+    //void SetHandTransform(Handedness handedness)
+    //{
+    //    int hand_index = handedness == Handedness.Left ? 0 : 1;
+    //    PlayerHand player_hand = handedness == Handedness.Left ? leftHand.Value : rightHand.Value;
+   
+    //    transform.GetChild(hand_index).SetPositionAndRotation(player_hand.position, player_hand.rotation);
+    //}
 }

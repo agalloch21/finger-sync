@@ -7,6 +7,7 @@ public class ThemeManager_RainDrop : MonoBehaviour
 {
     public PlayerManager playerManager;
     public ParticleSystem particleSystem;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,21 +22,27 @@ public class ThemeManager_RainDrop : MonoBehaviour
 
         Player player = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Player>();
         float nearest_dis = float.MaxValue;
-        if (player.leftHand.Value.gesture == HandGesture.Fisting)
+        //if (player.leftHand.Value.gesture == HandGesture.Fisting)
         {
-            float dis = GetNearestFistingHand(player.leftHand.Value.position);
+            float dis = GetNearestFistingHand(player.transform.GetChild(0).position);
             if (dis < nearest_dis) nearest_dis = dis;
         }
-        if (player.rightHand.Value.gesture == HandGesture.Fisting)
+        //if (player.rightHand.Value.gesture == HandGesture.Fisting)
         {
-            float dis = GetNearestFistingHand(player.rightHand.Value.position);
+            float dis = GetNearestFistingHand(player.transform.GetChild(1).position);
             if (dis < nearest_dis) nearest_dis = dis;
         }
 
+        
 
-        float particle_speed = Remap(nearest_dis, 0.01f, 0.2f, 1, 0, true);
+        float parameter = Remap(nearest_dis, 0.01f, 0.2f, 1, 0, true);
         ParticleSystem.LimitVelocityOverLifetimeModule velocity_module = particleSystem.limitVelocityOverLifetime;
-        velocity_module.drag = particle_speed;
+        velocity_module.drag = parameter;
+
+        ParticleSystem.MainModule main_module = particleSystem.main;
+        main_module.simulationSpeed = 1 - parameter;
+
+        Debug.Log($"Nearest Dis:{nearest_dis}, Parameter:{parameter}");
 
         //// Get the Velocity over lifetime modult
         //ParticleSystem.VelocityOverLifetimeModule snowVelocity = GameObject.Find("Snow").GetComponent<ParticleSystem>().velocityOverLifetime;
@@ -85,12 +92,12 @@ public class ThemeManager_RainDrop : MonoBehaviour
             {
                 //if(player_list[i].leftHand.Value.gesture == HandGesture.Fisting)
                 {
-                    dis = Vector3.Distance(player_list[i].leftHand.Value.position, pos);
+                    dis = Vector3.Distance(player_list[i].transform.GetChild(0).position, pos);
                     if (dis < min_dis) min_dis = dis;
                 }
                 //if (player_list[i].rightHand.Value.gesture == HandGesture.Fisting)
                 {
-                    dis = Vector3.Distance(player_list[i].rightHand.Value.position, pos);
+                    dis = Vector3.Distance(player_list[i].transform.GetChild(1).position, pos);
                     if (dis < min_dis) min_dis = dis;
                 }
             }
