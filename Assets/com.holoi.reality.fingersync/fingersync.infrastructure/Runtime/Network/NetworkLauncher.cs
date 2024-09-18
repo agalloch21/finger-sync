@@ -15,16 +15,17 @@ public class NetworkLauncher : MonoBehaviour
     
     public void StartHost()
     {
-        OnBeforeHostStarted();
+        //OnBeforeHostStarted();
 
         NetworkManager.Singleton.StartHost();
     }
 
     public void StartClient()
     {
-        OnBeforeClientStarted();
+        //OnBeforeClientStarted();
 
-        NetworkManager.Singleton.StartClient();
+        bool result = NetworkManager.Singleton.StartClient();
+        Debug.Log("Start Client: " + result.ToString());
     }
 
     public void Shutdown()

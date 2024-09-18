@@ -25,9 +25,9 @@ public class NetworkPanelController : MonoBehaviour
 
     private void Start()
     {
-        m_StartHostButton.gameObject.SetActive(true);
-        m_StartClientButton.gameObject.SetActive(true);
-        m_ShutdownButton.gameObject.SetActive(false);
+        //m_StartHostButton.gameObject.SetActive(true);
+        //m_StartClientButton.gameObject.SetActive(true);
+        //m_ShutdownButton.gameObject.SetActive(false);
 
         networkLauncher = FindFirstObjectByType<NetworkLauncher>();
     }
@@ -40,9 +40,9 @@ public class NetworkPanelController : MonoBehaviour
 
             if (!m_StartHostButton.gameObject.activeSelf && !m_StartClientButton.gameObject.activeSelf && m_ShutdownButton.gameObject.activeSelf)
             {
-                m_StartHostButton.gameObject.SetActive(true);
-                m_StartClientButton.gameObject.SetActive(true);
-                m_ShutdownButton.gameObject.SetActive(false);
+                //m_StartHostButton.gameObject.SetActive(true);
+                //m_StartClientButton.gameObject.SetActive(true);
+                //m_ShutdownButton.gameObject.SetActive(false);
             }
         }
         else
@@ -58,9 +58,9 @@ public class NetworkPanelController : MonoBehaviour
 
             if (m_StartHostButton.gameObject.activeSelf && m_StartClientButton.gameObject.activeSelf && !m_ShutdownButton.gameObject.activeSelf)
             {
-                m_StartHostButton.gameObject.SetActive(false);
-                m_StartClientButton.gameObject.SetActive(false);
-                m_ShutdownButton.gameObject.SetActive(true);
+                //m_StartHostButton.gameObject.SetActive(false);
+                //m_StartClientButton.gameObject.SetActive(false);
+                //m_ShutdownButton.gameObject.SetActive(true);
             }
         }
 
