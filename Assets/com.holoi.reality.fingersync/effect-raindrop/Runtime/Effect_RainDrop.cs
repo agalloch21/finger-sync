@@ -85,8 +85,12 @@ public class Effect_RainDrop : BaseEffect
             if (dis < nearest_dis) nearest_dis = dis;
         }
 
+        if(PlayerManager.Instance != null)
+        {
+            Debug.Log($"[{ this.GetType().ToString()}] OpponentCount:{PlayerManager.Instance.OpponentList.Count}");
+        }
 
-        Debug.Log($"[{ this.GetType().ToString()}] nearest_dis:{nearest_dis}");
+        
 
         if (particleSystem == null)
             return;

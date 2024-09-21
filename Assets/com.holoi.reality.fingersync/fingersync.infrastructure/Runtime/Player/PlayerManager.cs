@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour
     ulong pairedPlayerId = ulong.MaxValue;
     Player pairedPlayer = null;
 
+    EffectPairMode effectPairMode = EffectPairMode.Single;
+
     public UnityEvent<ulong> OnPlayerJoined;
     public UnityEvent<ulong> OnPlayerLeft;
 
@@ -28,25 +30,32 @@ public class PlayerManager : MonoBehaviour
 
     public void RefreshOpponetListByPairMode(EffectPairMode pair_mode)
     {
-        Debug.Log($"[{ this.GetType().ToString()}] RefreshOpponetListByPairMode: {pair_mode}.");
-        if (pair_mode == EffectPairMode.All)
+        effectPairMode = pair_mode;
+        UpdateOpponentList();
+    }
+
+    void UpdateOpponentList()
+    {
+        if (effectPairMode == EffectPairMode.All)
         {
             opponentList.Clear();
-            foreach(var player in playerList)
+            foreach (var player in playerList)
             {
                 if (player.Key != NetworkManager.Singleton.LocalClientId)
                     opponentList.Add(player.Key, player.Value);
             }
         }
-        else if(pair_mode == EffectPairMode.Single)
+        else if (effectPairMode == EffectPairMode.Single)
         {
             opponentList.Clear();
 
-            if(pairedPlayerId != ulong.MaxValue && pairedPlayer != null && playerList.ContainsKey(pairedPlayerId))
+            if (pairedPlayerId != ulong.MaxValue && pairedPlayer != null && playerList.ContainsKey(pairedPlayerId))
             {
                 opponentList.Add(pairedPlayerId, pairedPlayer);
             }
         }
+
+        Debug.Log($"[{ this.GetType().ToString()}] UpdateOpponentList. Count: {opponentList.Count}");
     }
 
     void Update()
@@ -61,7 +70,7 @@ public class PlayerManager : MonoBehaviour
 
         var gameobject_list = GameObject.FindGameObjectsWithTag("Player");
 
-
+        bool need_update_opponent_list = false;
         // check if player left
         List<ulong> player_to_be_removed = new();
         foreach(var player in playerList)
@@ -80,7 +89,8 @@ public class PlayerManager : MonoBehaviour
 
             if(exist == false)
             {
-                player_to_be_removed.Add(client_id);                
+                player_to_be_removed.Add(client_id);
+                need_update_opponent_list = true;
             }
         }
 
@@ -105,9 +115,19 @@ public class PlayerManager : MonoBehaviour
 
                 OnPlayerJoined?.Invoke(client_id);
 
+                need_update_opponent_list = true;
+
                 Debug.Log($"[{ this.GetType().ToString()}] Player {client_id} Joined. Player Count:{playerList.Count}");
             }
         }
+
+
+        // update opponent list
+        if(need_update_opponent_list)
+        {
+            UpdateOpponentList();
+        }
+
     }
 
     //void UpdatePlayerList()
