@@ -27,6 +27,17 @@ public class TimestampSynchronizer : NetworkBehaviour
 
     public UnityEvent<float> OnTimestampOffsetSynced;
 
+    public float Progress
+    {
+        get
+        {
+            if (m_TimestampOffsetQueue != null && m_TimestampOffsetQueueStablizationCount != 0)
+                return (float)m_TimestampOffsetQueue.Count / m_TimestampOffsetQueueStablizationCount;
+            else
+                return 0;
+        }
+    }
+
     public override void OnNetworkSpawn()
     {
         if (!IsHost)

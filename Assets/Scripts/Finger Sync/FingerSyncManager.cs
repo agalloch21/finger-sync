@@ -30,7 +30,7 @@ public class FingerSyncManager : NetworkBehaviour
 
     [SerializeField] private TimestampSynchronizer m_TimestampSynchronizer;
 
-    private bool m_IsSyncing = false;
+    public bool m_IsSyncing = false;
 
     private Handedness m_Handedness;
 
@@ -57,6 +57,16 @@ public class FingerSyncManager : NetworkBehaviour
     [SerializeField] private double m_ThetaStandardDeviationThreshold = 0.1;
 
     public UnityEvent<Vector3, Quaternion> OnFingerSyncCompleted;
+
+    public float Progress {
+        get
+        {
+            if (m_SyncResultQueue != null && m_SyncResultQueueStablizationCount != 0)
+                return (float)m_SyncResultQueue.Count / (float)m_SyncResultQueueStablizationCount;
+            else
+                return 0;
+        }
+    }
 
     public void StartFingerSync(Handedness handedness)
     {

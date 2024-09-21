@@ -9,8 +9,14 @@ using System.Net;
 
 public class DisplayInfo : MonoBehaviour
 {
-    public ImageTrackingStablizer stabilizer;
+    public TimestampSynchronizer timestampSynchronizer;
+    public FingerSyncManager fingerSyncManager;
+    
     public Transform worldRoot;
+    public Transform cameraOffset;
+    public Transform volumeCamera;
+    public Transform leftHandTF;
+    public Transform rightHandTF;
     Hand leftHand;
     HandGesture leftHandGesture = HandGesture.None;
 
@@ -25,11 +31,19 @@ public class DisplayInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HelperModule.Instance.SetInfo("Local IP", GetLocalIPAddress());
-        HelperModule.Instance.SetInfo("IsRelocating", stabilizer.IsRelocalizing.ToString());
-        HelperModule.Instance.SetInfo("Progress", Mathf.Floor(stabilizer.Progress * 100).ToString());
+        //HelperModule.Instance.SetInfo("Local IP", GetLocalIPAddress());
+        //HelperModule.Instance.SetInfo("IsRelocating", stabilizer.IsRelocalizing.ToString());
+        HelperModule.Instance.SetInfo("Timestamp", timestampSynchronizer.HasSynced.ToString());
+        HelperModule.Instance.SetInfo("Timestamp Progress", Mathf.Floor(timestampSynchronizer.Progress * 100).ToString());
+        HelperModule.Instance.SetInfo("Timestamp Result", timestampSynchronizer.ResultTimestampOffset.ToString());
+        HelperModule.Instance.SetInfo("IsFingerSyncing", fingerSyncManager.m_IsSyncing.ToString());
+        HelperModule.Instance.SetInfo("Progress", Mathf.Floor(fingerSyncManager.Progress * 100).ToString());
         HelperModule.Instance.SetInfo("WorldRoot Pos", worldRoot.position.ToString());
-        
+        HelperModule.Instance.SetInfo("Camera Offset", cameraOffset.position.ToString());
+        HelperModule.Instance.SetInfo("Volume Camera", volumeCamera.position.ToString());
+        HelperModule.Instance.SetInfo("Left Hand TF", leftHandTF.position.ToString());
+        HelperModule.Instance.SetInfo("Right Hand TF", rightHandTF.position.ToString());
+
         if (leftHand != null)
         {
             HelperModule.Instance.SetInfo("Left Hand Gesture", leftHandGesture.ToString());
