@@ -54,9 +54,6 @@ public class Effect_RainDrop : BaseEffect
 
             // destory or hide particle system
             particleSystem.gameObject.SetActive(false);
-
-            // reset opponent list
-            ClearOpponent();
         }
     }
     
@@ -117,13 +114,9 @@ public class Effect_RainDrop : BaseEffect
 
     float GetNearestFistingHand(Vector3 pos)
     {
-        Dictionary<ulong, Player> opponent_list = opponentList;
-        if (opponent_list == null)
-            opponent_list = PlayerManager.Instance.PlayerList;
-
         float min_dis = float.MaxValue;
         float dis;
-        foreach (var opponent in opponent_list)
+        foreach (var opponent in PlayerManager.Instance.OpponentList)
         {
             if(opponent.Key != NetworkManager.Singleton.LocalClientId)
             {

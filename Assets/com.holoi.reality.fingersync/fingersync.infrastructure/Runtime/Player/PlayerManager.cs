@@ -10,12 +10,46 @@ public class PlayerManager : MonoBehaviour
     public Dictionary<ulong, Player> PlayerList { get => playerList; }
     protected Dictionary<ulong, Player> playerList = new();
 
+    public Dictionary<ulong, Player> OpponentList { get => opponentList; }
+    protected Dictionary<ulong, Player> opponentList = new();
+
+    ulong pairedPlayerId = ulong.MaxValue;
+    Player pairedPlayer = null;
+
     public UnityEvent<ulong> OnPlayerJoined;
     public UnityEvent<ulong> OnPlayerLeft;
 
+    public UnityEvent<ulong> OnPairCompleted;
+    ////////////////////////////////////////////////
+    ///
+    /// Todo: Determine when pairing complete
+    ///
+    ////////////////////////////////////////////////
 
+    public void RefreshOpponetListByPairMode(EffectPairMode pair_mode)
+    {
+        Debug.Log($"[{ this.GetType().ToString()}] RefreshOpponetListByPairMode: {pair_mode}.");
+        if (pair_mode == EffectPairMode.All)
+        {
+            opponentList.Clear();
+            foreach(var player in playerList)
+            {
+                if (player.Key != NetworkManager.Singleton.LocalClientId)
+                    opponentList.Add(player.Key, player.Value);
+            }
+        }
+        else if(pair_mode == EffectPairMode.Single)
+        {
+            opponentList.Clear();
 
-    void LateUpdate()
+            if(pairedPlayerId != ulong.MaxValue && pairedPlayer != null && playerList.ContainsKey(pairedPlayerId))
+            {
+                opponentList.Add(pairedPlayerId, pairedPlayer);
+            }
+        }
+    }
+
+    void Update()
     {
         UpdatePlayerList();
     }
@@ -29,6 +63,7 @@ public class PlayerManager : MonoBehaviour
 
 
         // check if player left
+        List<ulong> player_to_be_removed = new();
         foreach(var player in playerList)
         {
             ulong client_id = player.Key;
@@ -45,12 +80,19 @@ public class PlayerManager : MonoBehaviour
 
             if(exist == false)
             {
-                playerList.Remove(client_id);
-
-                OnPlayerLeft?.Invoke(client_id);
-
-                Debug.Log($"[{ this.GetType().ToString()}] Player {client_id} Left. Player Count:{playerList.Count}");
+                player_to_be_removed.Add(client_id);                
             }
+        }
+
+        for(int i=0; i<player_to_be_removed.Count; i++)
+        {
+            ulong client_id = player_to_be_removed[i];
+
+            playerList.Remove(client_id);
+
+            OnPlayerLeft?.Invoke(client_id);
+
+            Debug.Log($"[{ this.GetType().ToString()}] Player {client_id} Left. Player Count:{playerList.Count}");
         }
 
         // check if new player joined

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class BaseEffect : MonoBehaviour
+public class BaseEffect : NetworkBehaviour
 {
-    protected Dictionary<ulong, Player> opponentList;
+    //protected Dictionary<ulong, Player> opponentList;
 
     protected bool effectEnabled = false;
 
@@ -17,23 +18,23 @@ public class BaseEffect : MonoBehaviour
 
     }
 
-    public virtual void SpecifyOpponent(ulong client_id, Player player)
-    {
-        if (opponentList != null)
-            opponentList.Add(client_id, player);
-    }
+    //public virtual void SpecifyOpponent(ulong client_id, Player player)
+    //{
+    //    if (opponentList != null)
+    //        opponentList.Add(client_id, player);
+    //}
 
-    public virtual void ClearOpponent()
-    {
-        if (opponentList != null)
-            opponentList.Clear();
-    }
+    //public virtual void ClearOpponent()
+    //{
+    //    if (opponentList != null)
+    //        opponentList.Clear();
+    //}
 
-    public void OnPlayerLeft(ulong client_id)
-    {
-        if(opponentList != null && opponentList.ContainsKey(client_id))
-        {
-            opponentList.Remove(client_id);
-        }
-    }
+    //public void OnPlayerLeft(ulong client_id)
+    //{
+    //    if(opponentList != null && opponentList.ContainsKey(client_id))
+    //    {
+    //        opponentList.Remove(client_id);
+    //    }
+    //}
 }
