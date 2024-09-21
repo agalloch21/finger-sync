@@ -21,6 +21,8 @@ public class Effect_RainDrop : BaseEffect
 
     public override void StartEffect()
     {
+        Debug.Log($"[{ this.GetType().ToString()}] Start.");
+
         // create or show paricle system
         particleSystem.gameObject.SetActive(true);
 
@@ -32,6 +34,8 @@ public class Effect_RainDrop : BaseEffect
 
     public override void StopEffect()
     {
+        Debug.Log($"[{ this.GetType().ToString()}] Stop.");
+
         // stop updating effect
         effectEnabled = false;
         animationDirection = -1;
@@ -81,6 +85,8 @@ public class Effect_RainDrop : BaseEffect
             if (dis < nearest_dis) nearest_dis = dis;
         }
 
+
+        Debug.Log($"[{ this.GetType().ToString()}] nearest_dis:{nearest_dis}");
 
         if (particleSystem == null)
             return;
