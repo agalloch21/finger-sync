@@ -15,7 +15,7 @@ public class EffectManager : NetworkBehaviour
     List<BaseEffect> effectList = new();
 
     [SerializeField]
-    int defaultEffectIndex = 0;
+    int defaultEffectIndex = 1;
 
     int currentEffectIndex = -1;
 
@@ -29,7 +29,7 @@ public class EffectManager : NetworkBehaviour
         if (IsServer)
         {
             // initialize effect
-            SetEffectStatusToAll(EffectPairMode.All, 0);
+            SetEffectStatusToAll(EffectPairMode.All, defaultEffectIndex);
 
             return;
         }            
@@ -55,7 +55,6 @@ public class EffectManager : NetworkBehaviour
     }
 
     // Client
-
     public void OnPairCompleted()
     {
         // request performing default effect
@@ -169,6 +168,8 @@ public class EffectManager : NetworkBehaviour
 
         previousPairMode = currentPairMode;
         currentPairMode = pair_mode;
+
+        // set pairmode for current effect
 
 
         // reset opponent list

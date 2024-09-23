@@ -18,6 +18,11 @@ public class BaseEffect : NetworkBehaviour
 
     }
 
+    public virtual void OnPairCompleted()
+    {
+
+    }
+
     //public virtual void SpecifyOpponent(ulong client_id, Player player)
     //{
     //    if (opponentList != null)
